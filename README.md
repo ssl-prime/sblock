@@ -1,45 +1,63 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+required information for run these api:
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+1. install golang  version 1.10.3
+you have to clone this repo where by default path is set.
+or you can path as per your convenice 
+if required package or import location  not  found  then
+run these command  go get or go get <import location>
+i have table in mysal whose name is school_info
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+CREATE TABLE `school_info` (
+  `school_info_id` int(11) NOT NULL AUTO_INCREMENT,
+  `district` varchar(255) DEFAULT NULL,
+  `block` varchar(255) DEFAULT NULL,
+  `cluster` varchar(255) DEFAULT NULL,
+  `schoolid` int(11) NOT NULL,
+  `schoolname` varchar(255) NOT NULL,
+  `category` varchar(255) NOT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `medium_of_inst` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `area` varchar(255) NOT NULL,
+  `pincode` int(6) NOT NULL,
+  `landmark` varchar(255) DEFAULT NULL,
+  `identification1` varchar(255) DEFAULT NULL,
+  `busroutes` varchar(255) DEFAULT NULL,
+  `identification2` varchar(255) DEFAULT NULL,
+  `latlong` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`school_info_id`),
+  UNIQUE KEY `schoolid` (`schoolid`)
+) ;
 
----
 
-## Edit a file
+for making connection you need to change 
+user_name ,password and database
+in sblock->api->util-> dbConn(){
+db, err = gorm.Open("mysql", "root:spatico@/grabbd")
+}
+change file location as i have attached csv with this repo.
+now go to lauch folder and use this command :   go run main.go
+this will run on 8090 by default
+api :
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+for uploading the csv file into database
+(if u need the csv to be converted into json then pls let me know i will give you in separate file)
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+localhost:8090/saurabh/sblock/v1/convert/csv/tojson/
 
----
+search info based on certain parameter
 
-## Create a file
+localhost:8090/saurabh/sblock/v1/search/school/?pincode=560062&schoolname= "GUHPS ALAHALLI"
 
-Next, you’ll add a new file to this repository.
+sort the data on click on certain column,
+localhost:8090/saurabh/sblock/v1/sort/by/?pincode
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+separate into particular group based on certain column
+localhost:8090/saurabh/sblock/v1/group/by/?category
+i have only group the name of school based on certain passed parameter.
+if something is missing let me know
+email : skcse03@gmail.com
+mob : 8825385286
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
-
----
-
-## Clone a repository
-
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
-
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
-
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
